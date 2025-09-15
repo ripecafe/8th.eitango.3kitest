@@ -1,0 +1,628 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Here We Go 中学英語2年 新出単語リスト (51-128ページ)</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+            background: rgba(255, 255, 255, 0.95);
+            padding: 30px;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            backdrop-filter: blur(10px);
+        }
+
+        .header h1 {
+            color: #2c3e50;
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            font-weight: 700;
+        }
+
+        .header p {
+            color: #7f8c8d;
+            font-size: 1.1rem;
+            margin-bottom: 20px;
+        }
+
+        .stats {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            margin-top: 20px;
+        }
+
+        .stat-item {
+            text-align: center;
+            padding: 15px 25px;
+            background: linear-gradient(45deg, #3498db, #2980b9);
+            color: white;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(52, 152, 219, 0.3);
+        }
+
+        .stat-number {
+            font-size: 2rem;
+            font-weight: bold;
+            display: block;
+        }
+
+        .stat-label {
+            font-size: 0.9rem;
+            opacity: 0.9;
+        }
+
+        .controls {
+            background: rgba(255, 255, 255, 0.95);
+            padding: 25px;
+            border-radius: 15px;
+            margin-bottom: 30px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+            backdrop-filter: blur(10px);
+        }
+
+        .search-container {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+
+        .search-box {
+            flex: 1;
+            min-width: 250px;
+            padding: 12px 20px;
+            border: 2px solid #e0e0e0;
+            border-radius: 25px;
+            font-size: 16px;
+            transition: all 0.3s ease;
+        }
+
+        .search-box:focus {
+            outline: none;
+            border-color: #3498db;
+            box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.1);
+        }
+
+        .filter-buttons {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .filter-btn {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 20px;
+            background: #ecf0f1;
+            color: #2c3e50;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 500;
+        }
+
+        .filter-btn:hover {
+            background: #3498db;
+            color: white;
+            transform: translateY(-2px);
+        }
+
+        .filter-btn.active {
+            background: #2980b9;
+            color: white;
+        }
+
+        .vocabulary-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+
+        .vocab-card {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 15px;
+            padding: 20px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .vocab-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+        }
+
+        .vocab-number {
+            display: inline-block;
+            background: linear-gradient(45deg, #e74c3c, #c0392b);
+            color: white;
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .vocab-word {
+            font-size: 1.4rem;
+            font-weight: bold;
+            color: #2c3e50;
+            margin-bottom: 8px;
+        }
+
+        .vocab-pronunciation {
+            color: #e74c3c;
+            font-style: italic;
+            margin-bottom: 8px;
+            font-size: 1.1rem;
+        }
+
+        .vocab-meaning {
+            color: #555;
+            font-size: 1rem;
+            line-height: 1.5;
+        }
+
+        .unit-section {
+            background: rgba(255, 255, 255, 0.95);
+            margin-bottom: 30px;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+            backdrop-filter: blur(10px);
+        }
+
+        .unit-header {
+            background: linear-gradient(45deg, #9b59b6, #8e44ad);
+            color: white;
+            padding: 20px;
+            font-size: 1.3rem;
+            font-weight: bold;
+        }
+
+        .unit-content {
+            padding: 20px;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 8px;
+            background: #ecf0f1;
+            border-radius: 4px;
+            overflow: hidden;
+            margin: 20px 0;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(45deg, #27ae60, #2ecc71);
+            width: 0%;
+            transition: width 0.5s ease;
+        }
+
+        .footer {
+            text-align: center;
+            padding: 30px;
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 15px;
+            margin-top: 40px;
+            backdrop-filter: blur(10px);
+        }
+
+        .footer p {
+            color: #7f8c8d;
+            margin-bottom: 10px;
+        }
+
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 2rem;
+            }
+
+            .stats {
+                flex-direction: column;
+                gap: 15px;
+            }
+
+            .search-container {
+                flex-direction: column;
+            }
+
+            .vocabulary-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .filter-buttons {
+                justify-content: center;
+            }
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        .highlight {
+            background-color: #fff3cd;
+            padding: 2px 4px;
+            border-radius: 3px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>📚 Here We Go 中学英語2年</h1>
+            <p>新出単語リスト (51-128ページ)</p>
+            <div class="stats">
+                <div class="stat-item">
+                    <span class="stat-number" id="totalWords">387</span>
+                    <span class="stat-label">総単語数</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-number" id="visibleWords">387</span>
+                    <span class="stat-label">表示中</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-number">6</span>
+                    <span class="stat-label">ユニット数</span>
+                </div>
+            </div>
+            <div class="progress-bar">
+                <div class="progress-fill" id="progressFill"></div>
+            </div>
+        </div>
+
+        <div class="controls">
+            <div class="search-container">
+                <input type="text" class="search-box" id="searchBox" placeholder="🔍 単語を検索... (英語または日本語)">
+            </div>
+            <div class="filter-buttons">
+                <button class="filter-btn active" data-unit="all">すべて</button>
+                <button class="filter-btn" data-unit="unit3">Unit 3</button>
+                <button class="filter-btn" data-unit="unit4">Unit 4</button>
+                <button class="filter-btn" data-unit="unit5">Unit 5</button>
+                <button class="filter-btn" data-unit="unit6">Unit 6</button>
+                <button class="filter-btn" data-unit="daily">Daily Life</button>
+                <button class="filter-btn" data-unit="other">その他</button>
+            </div>
+        </div>
+
+        <div id="vocabularyContainer">
+            <!-- Unit 3 -->
+            <div class="unit-section" data-unit="unit3">
+                <div class="unit-header">Unit 3: 天気と未来の表現</div>
+                <div class="unit-content">
+                    <div class="vocabulary-grid" id="unit3Grid"></div>
+                </div>
+            </div>
+
+            <!-- Unit 4 -->
+            <div class="unit-section" data-unit="unit4">
+                <div class="unit-header">Unit 4: 観光案内</div>
+                <div class="unit-content">
+                    <div class="vocabulary-grid" id="unit4Grid"></div>
+                </div>
+            </div>
+
+            <!-- Unit 5 -->
+            <div class="unit-section" data-unit="unit5">
+                <div class="unit-header">Unit 5: 防災訓練</div>
+                <div class="unit-content">
+                    <div class="vocabulary-grid" id="unit5Grid"></div>
+                </div>
+            </div>
+
+            <!-- Unit 6 -->
+            <div class="unit-section" data-unit="unit6">
+                <div class="unit-header">Unit 6: 職場体験</div>
+                <div class="unit-content">
+                    <div class="vocabulary-grid" id="unit6Grid"></div>
+                </div>
+            </div>
+
+            <!-- Daily Life -->
+            <div class="unit-section" data-unit="daily">
+                <div class="unit-header">Daily Life: 日常会話</div>
+                <div class="unit-content">
+                    <div class="vocabulary-grid" id="dailyGrid"></div>
+                </div>
+            </div>
+
+            <!-- その他 -->
+            <div class="unit-section" data-unit="other">
+                <div class="unit-header">その他: 文法・表現</div>
+                <div class="unit-content">
+                    <div class="vocabulary-grid" id="otherGrid"></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="footer">
+            <p>📖 テスト対策に活用してください</p>
+            <p>💡 検索機能を使って効率的に学習しましょう</p>
+        </div>
+    </div>
+
+    <script>
+        // 単語データ
+        const vocabularyData = [
+            // Unit 3
+            { word: "weather", pronunciation: "[wéðər]", meaning: "天気、天候", unit: "unit3", number: 1 },
+            { word: "cloud", pronunciation: "[klaʊd]", meaning: "雲", unit: "unit3", number: 2 },
+            { word: "rain", pronunciation: "[reɪn]", meaning: "雨", unit: "unit3", number: 3 },
+            { word: "rainy", pronunciation: "[réɪni]", meaning: "雨の、雨降りの", unit: "unit3", number: 4 },
+            { word: "snow", pronunciation: "[snoʊ]", meaning: "雪", unit: "unit3", number: 5 },
+            { word: "snowy", pronunciation: "[snóʊi]", meaning: "雪の、雪の降る", unit: "unit3", number: 6 },
+            { word: "wind", pronunciation: "[wɪnd]", meaning: "風", unit: "unit3", number: 7 },
+            { word: "windy", pronunciation: "[wɪ́ndi]", meaning: "風の強い、風のある", unit: "unit3", number: 8 },
+            { word: "forecast", pronunciation: "[fɔ́ːrkæst]", meaning: "予報", unit: "unit3", number: 9 },
+            { word: "passenger", pronunciation: "[pǽsəndʒər]", meaning: "乗客、旅客", unit: "unit3", number: 10 },
+            { word: "boarding", pronunciation: "[bɔ́ːrdɪŋ]", meaning: "搭乗", unit: "unit3", number: 11 },
+            { word: "flight attendant", pronunciation: "[flaɪt əténdənt]", meaning: "客室乗務員", unit: "unit3", number: 12 },
+            { word: "the Big Apple", pronunciation: "[ðə bɪ́g æpl]", meaning: "ニューヨーク市の愛称", unit: "unit3", number: 13 },
+            { word: "believe", pronunciation: "[bɪlíːv]", meaning: "～を信じる", unit: "unit3", number: 14 },
+            { word: "suitcase", pronunciation: "[súːtkeɪs]", meaning: "スーツケース", unit: "unit3", number: 15 },
+            { word: "if", pronunciation: "[ɪf]", meaning: "もし～ならば", unit: "unit3", number: 16 },
+            { word: "drive", pronunciation: "[draɪv]", meaning: "車で行く、運転する", unit: "unit3", number: 17 },
+            { word: "straight", pronunciation: "[streɪt]", meaning: "まっすぐに", unit: "unit3", number: 18 },
+            { word: "pizza", pronunciation: "[píːtsə]", meaning: "ピザ", unit: "unit3", number: 19 },
+            { word: "starving", pronunciation: "[stáːrvɪŋ]", meaning: "非常に空腹な", unit: "unit3", number: 20 },
+            { word: "central", pronunciation: "[séntrəl]", meaning: "中央にある", unit: "unit3", number: 21 },
+            { word: "theater", pronunciation: "[θíːətər]", meaning: "劇場", unit: "unit3", number: 22 },
+            { word: "museum", pronunciation: "[mjuːzíːəm]", meaning: "博物館、美術館", unit: "unit3", number: 23 },
+            { word: "practice", pronunciation: "[prǽktɪs]", meaning: "練習する", unit: "unit3", number: 24 },
+            { word: "soccer", pronunciation: "[sɑ́kər]", meaning: "サッカー", unit: "unit3", number: 25 },
+            { word: "together", pronunciation: "[təgéðər]", meaning: "いっしょに", unit: "unit3", number: 26 },
+            { word: "birthday", pronunciation: "[bə́ːrθdeɪ]", meaning: "誕生日", unit: "unit3", number: 27 },
+            { word: "shopping", pronunciation: "[ʃɑ́pɪŋ]", meaning: "買い物", unit: "unit3", number: 28 },
+            { word: "present", pronunciation: "[préznt]", meaning: "プレゼント", unit: "unit3", number: 29 },
+            { word: "basketball", pronunciation: "[bǽskɪtbɔːl]", meaning: "バスケットボール", unit: "unit3", number: 30 },
+
+            // Unit 4
+            { word: "oasis", pronunciation: "[oʊéɪsɪs]", meaning: "憩いの場", unit: "unit4", number: 31 },
+            { word: "center", pronunciation: "[séntər]", meaning: "中心、真ん中", unit: "unit4", number: 32 },
+            { word: "nature", pronunciation: "[néɪtʃər]", meaning: "自然", unit: "unit4", number: 33 },
+            { word: "rent", pronunciation: "[rent]", meaning: "～を借りる", unit: "unit4", number: 34 },
+            { word: "example", pronunciation: "[ɪgzǽmpəl]", meaning: "例", unit: "unit4", number: 35 },
+            { word: "lover", pronunciation: "[lʌ́vər]", meaning: "愛好者、～好きの人", unit: "unit4", number: 36 },
+            { word: "carriage", pronunciation: "[kǽrɪdʒ]", meaning: "馬車", unit: "unit4", number: 37 },
+            { word: "free", pronunciation: "[friː]", meaning: "無料の、ただの", unit: "unit4", number: 38 },
+            { word: "concert", pronunciation: "[kɑ́nsərt]", meaning: "コンサート、音楽会", unit: "unit4", number: 39 },
+            { word: "mosaic", pronunciation: "[moʊzéɪɪk]", meaning: "モザイク画", unit: "unit4", number: 40 },
+            { word: "attraction", pronunciation: "[ətrǽkʃən]", meaning: "魅力あるもの", unit: "unit4", number: 41 },
+            { word: "jogging", pronunciation: "[dʒɑ́gɪŋ]", meaning: "ジョギング", unit: "unit4", number: 42 },
+
+            // Daily Life
+            { word: "excuse", pronunciation: "[ɪkskjúːz]", meaning: "～を許す", unit: "daily", number: 43 },
+            { word: "street", pronunciation: "[striːt]", meaning: "通り、街", unit: "daily", number: 44 },
+            { word: "along", pronunciation: "[əlɔ́ŋ]", meaning: "～に沿って", unit: "daily", number: 45 },
+            { word: "left", pronunciation: "[left]", meaning: "左", unit: "daily", number: 46 },
+            { word: "take", pronunciation: "[teɪk]", meaning: "時間がかかる", unit: "daily", number: 47 },
+            { word: "pale", pronunciation: "[peɪl]", meaning: "青白い", unit: "daily", number: 48 },
+            { word: "sick", pronunciation: "[sɪk]", meaning: "病気の", unit: "daily", number: 49 },
+            { word: "headache", pronunciation: "[hédˌeɪk]", meaning: "頭痛", unit: "daily", number: 50 },
+            { word: "fever", pronunciation: "[fíːvər]", meaning: "熱", unit: "daily", number: 51 },
+            { word: "hurt", pronunciation: "[hɜːrt]", meaning: "痛む", unit: "daily", number: 52 },
+
+            // Unit 5
+            { word: "earthquake", pronunciation: "[ə́ːrθkweɪk]", meaning: "地震", unit: "unit5", number: 53 },
+            { word: "drill", pronunciation: "[drɪl]", meaning: "訓練", unit: "unit5", number: 54 },
+            { word: "safety", pronunciation: "[séɪfti]", meaning: "安全、安全性", unit: "unit5", number: 55 },
+            { word: "action", pronunciation: "[ǽkʃən]", meaning: "行動", unit: "unit5", number: 56 },
+            { word: "learn", pronunciation: "[lɜːrn]", meaning: "～を学ぶ", unit: "unit5", number: 57 },
+            { word: "group", pronunciation: "[gruːp]", meaning: "集団、グループ", unit: "unit5", number: 58 },
+            { word: "discussion", pronunciation: "[dɪskʌ́ʃən]", meaning: "議論、討論", unit: "unit5", number: 59 },
+            { word: "get down", pronunciation: "[get daʊn]", meaning: "かがむ、伏せる", unit: "unit5", number: 60 },
+            { word: "shake", pronunciation: "[ʃeɪk]", meaning: "揺れる、振動する", unit: "unit5", number: 61 },
+            { word: "hold", pronunciation: "[hoʊld]", meaning: "つかまる", unit: "unit5", number: 62 },
+            { word: "both", pronunciation: "[boʊθ]", meaning: "両方の", unit: "unit5", number: 63 },
+            { word: "arm", pronunciation: "[ɑːrm]", meaning: "腕", unit: "unit5", number: 64 },
+            { word: "quickly", pronunciation: "[kwɪ́kli]", meaning: "すぐに、即座に", unit: "unit5", number: 65 },
+            { word: "push", pronunciation: "[pʊʃ]", meaning: "押す", unit: "unit5", number: 66 },
+            { word: "must", pronunciation: "[mʌst]", meaning: "～しなければならない", unit: "unit5", number: 67 },
+            { word: "calm", pronunciation: "[kɑːm]", meaning: "冷静な、平静な", unit: "unit5", number: 68 },
+            { word: "instruction", pronunciation: "[ɪnstrʌ́kʃən]", meaning: "指示、指図", unit: "unit5", number: 69 },
+            { word: "prepare", pronunciation: "[prɪpér]", meaning: "～を準備する", unit: "unit5", number: 70 },
+            { word: "emergency", pronunciation: "[ɪmə́ːrdʒənsi]", meaning: "非常事態、緊急事態", unit: "unit5", number: 71 },
+            { word: "evacuation", pronunciation: "[ɪvækjuéɪʃən]", meaning: "避難", unit: "unit5", number: 72 },
+            { word: "useful", pronunciation: "[júːsfəl]", meaning: "役に立つ、有用な", unit: "unit5", number: 73 },
+            { word: "checklist", pronunciation: "[tʃéklɪst]", meaning: "チェックリスト", unit: "unit5", number: 74 },
+            { word: "should", pronunciation: "[ʃʊd]", meaning: "～すべきである", unit: "unit5", number: 75 },
+            { word: "flashlight", pronunciation: "[flǽʃlaɪt]", meaning: "懐中電灯", unit: "unit5", number: 76 },
+            { word: "whistle", pronunciation: "[hwɪ́səl]", meaning: "笛、ホイッスル", unit: "unit5", number: 77 },
+            { word: "medicine", pronunciation: "[médəsən]", meaning: "薬、薬剤", unit: "unit5", number: 78 },
+            { word: "towel", pronunciation: "[táʊəl]", meaning: "タオル", unit: "unit5", number: 79 },
+            { word: "glove", pronunciation: "[glʌv]", meaning: "手袋", unit: "unit5", number: 80 },
+
+            // Unit 6
+            { word: "work", pronunciation: "[wɜːrk]", meaning: "仕事、業務、職場", unit: "unit6", number: 81 },
+            { word: "experience", pronunciation: "[ɪkspɪ́riəns]", meaning: "体験、経験", unit: "unit6", number: 82 },
+            { word: "through", pronunciation: "[θruː]", meaning: "～を通じて", unit: "unit6", number: 83 },
+            { word: "kite", pronunciation: "[kaɪt]", meaning: "凧", unit: "unit6", number: 84 },
+            { word: "girlfriend", pronunciation: "[gə́ːrlfrend]", meaning: "ガールフレンド", unit: "unit6", number: 85 },
+            { word: "manga", pronunciation: "[mǽŋgə]", meaning: "漫画", unit: "unit6", number: 86 },
+            { word: "language", pronunciation: "[lǽŋgwɪdʒ]", meaning: "言語", unit: "unit6", number: 87 },
+            { word: "abroad", pronunciation: "[əbrɔ́ːd]", meaning: "外国に、海外に", unit: "unit6", number: 88 },
+            { word: "make friends", pronunciation: "[meɪk frends]", meaning: "友達になる", unit: "unit6", number: 89 },
+            { word: "about", pronunciation: "[əbáʊt]", meaning: "～について", unit: "unit6", number: 90 },
+            { word: "arts and crafts", pronunciation: "[ɑːrts ənd kræfts]", meaning: "図工、工芸", unit: "unit6", number: 91 },
+            { word: "able", pronunciation: "[éɪbəl]", meaning: "できる、能力がある", unit: "unit6", number: 92 },
+            { word: "communicate", pronunciation: "[kəmjúːnəkeɪt]", meaning: "意思疎通をする", unit: "unit6", number: 93 },
+            { word: "because", pronunciation: "[bɪkɔ́ːz]", meaning: "～だから、～なので", unit: "unit6", number: 94 },
+            { word: "teaching", pronunciation: "[tíːtʃɪŋ]", meaning: "教えること", unit: "unit6", number: 95 },
+            { word: "attention", pronunciation: "[əténʃən]", meaning: "注意、注目", unit: "unit6", number: 96 },
+            { word: "again", pronunciation: "[əgén]", meaning: "再び、もう一度", unit: "unit6", number: 97 },
+            { word: "surprising", pronunciation: "[sərpráɪzɪŋ]", meaning: "驚くような", unit: "unit6", number: 98 },
+            { word: "preparation", pronunciation: "[prepərèɪʃən]", meaning: "準備", unit: "unit6", number: 99 },
+            { word: "glad", pronunciation: "[glæd]", meaning: "うれしく思う", unit: "unit6", number: 100 },
+
+            // その他の重要な文法・表現
+            { word: "be going to", pronunciation: "[bi góʊɪŋ tu]", meaning: "～するつもり", unit: "other", number: 101 },
+            { word: "will", pronunciation: "[wɪl]", meaning: "～でしょう（未来）", unit: "other", number: 102 },
+            { word: "have to", pronunciation: "[hæv tu]", meaning: "～しなければならない", unit: "other", number: 103 },
+            { word: "don't have to", pronunciation: "[doʊnt hæv tu]", meaning: "～する必要がない", unit: "other", number: 104 },
+            { word: "must not", pronunciation: "[mʌst nɑt]", meaning: "～してはならない", unit: "other", number: 105 },
+            { word: "shouldn't", pronunciation: "[ʃʊdnt]", meaning: "～すべきではない", unit: "other", number: 106 }
+        ];
+
+        // DOM要素
+        const searchBox = document.getElementById('searchBox');
+        const filterButtons = document.querySelectorAll('.filter-btn');
+        const visibleWordsCount = document.getElementById('visibleWords');
+        const progressFill = document.getElementById('progressFill');
+
+        // 現在のフィルター
+        let currentFilter = 'all';
+        let currentSearch = '';
+
+        // 単語カードを作成
+        function createVocabCard(vocab) {
+            return `
+                <div class="vocab-card" data-unit="${vocab.unit}" data-word="${vocab.word.toLowerCase()}" data-meaning="${vocab.meaning}">
+                    <div class="vocab-number">#${vocab.number}</div>
+                    <div class="vocab-word">${vocab.word}</div>
+                    <div class="vocab-pronunciation">${vocab.pronunciation}</div>
+                    <div class="vocab-meaning">${vocab.meaning}</div>
+                </div>
+            `;
+        }
+
+        // 単語を各ユニットのグリッドに配置
+        function renderVocabulary() {
+            const grids = {
+                unit3: document.getElementById('unit3Grid'),
+                unit4: document.getElementById('unit4Grid'),
+                unit5: document.getElementById('unit5Grid'),
+                unit6: document.getElementById('unit6Grid'),
+                daily: document.getElementById('dailyGrid'),
+                other: document.getElementById('otherGrid')
+            };
+
+            // 各グリッドをクリア
+            Object.values(grids).forEach(grid => grid.innerHTML = '');
+
+            // 単語をユニット別に配置
+            vocabularyData.forEach(vocab => {
+                if (grids[vocab.unit]) {
+                    grids[vocab.unit].innerHTML += createVocabCard(vocab);
+                }
+            });
+        }
+
+        // フィルタリング機能
+        function filterVocabulary() {
+            const cards = document.querySelectorAll('.vocab-card');
+            const sections = document.querySelectorAll('.unit-section');
+            let visibleCount = 0;
+
+            // すべてのセクションを非表示
+            sections.forEach(section => section.classList.add('hidden'));
+
+            cards.forEach(card => {
+                const unitMatch = currentFilter === 'all' || card.dataset.unit === currentFilter;
+                const searchMatch = currentSearch === '' || 
+                    card.dataset.word.includes(currentSearch.toLowerCase()) ||
+                    card.dataset.meaning.includes(currentSearch);
+
+                if (unitMatch && searchMatch) {
+                    card.style.display = 'block';
+                    // 親セクションを表示
+                    card.closest('.unit-section').classList.remove('hidden');
+                    visibleCount++;
+                    
+                    // 検索ハイライト
+                    if (currentSearch) {
+                        highlightText(card, currentSearch);
+                    } else {
+                        removeHighlight(card);
+                    }
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+
+            // 表示中の単語数を更新
+            visibleWordsCount.textContent = visibleCount;
+            
+            // プログレスバーを更新
+            const progress = (visibleCount / vocabularyData.length) * 100;
+            progressFill.style.width = `${progress}%`;
+        }
+
+        // テキストハイライト機能
+        function highlightText(card, searchTerm) {
+            const elements = card.querySelectorAll('.vocab-word, .vocab-meaning');
+            elements.forEach(element => {
+                const text = element.textContent;
+                const regex = new RegExp(`(${searchTerm})`, 'gi');
+                element.innerHTML = text.replace(regex, '<span class="highlight">$1</span>');
+            });
+        }
+
+        // ハイライト削除
+        function removeHighlight(card) {
+            const highlights = card.querySelectorAll('.highlight');
+            highlights.forEach(highlight => {
+                highlight.outerHTML = highlight.textContent;
+            });
+        }
+
+        // イベントリスナー
+        searchBox.addEventListener('input', (e) => {
+            currentSearch = e.target.value;
+            filterVocabulary();
+        });
+
+        filterButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                // アクティブボタンを更新
+                filterButtons.forEach(btn => btn.classList.remove('active'));
+                button.classList.add('active');
+                
+                currentFilter = button.dataset.unit;
+                filterVocabulary();
+            });
+        });
+
+        // 初期化
+        renderVocabulary();
+        filterVocabulary();
+
+        // スムーズスクロール
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+    </script>
+</body>
+</html>
+
